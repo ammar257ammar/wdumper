@@ -9,4 +9,6 @@ This fork's docker is available through DockerHub so need need to build it in or
 
 Use the Wdumper Docker like this:
 
+```
 docker run -it --rm --name wdumper -v YOUR_DATA_PATH_HERE:/data -e DUMPS_PATH=/data  aammar/wdumper /data/wikidata_dump.json.gz /data/specs.json
+```
