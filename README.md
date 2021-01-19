@@ -3,19 +3,10 @@ _A tool to create customized Wikidata RDF dumps_
 
 This project contains the source code for the application running at https://tools.wmflabs.org/wdumps.
 
-## Building
+## Using the Docker
 
-To build the project, run `gradle build` in the root directory.  
+This fork's docker is available through DockerHub so need need to build it in order to use it.
 
-## Environment variables for configuration
+Use the Wdumper Docker like this:
 
-| Name                 | Description                               | Default                      |
-|----------------------|-------------------------------------------|------------------------------|
-| DB_HOST              | hostname for MariaDB connection           | localhost                    |
-| DB_USER              | username to connect to the DB             | root                         |
-| DB_PASSWORD          | password to connect to the DB             |                              |
-| DB_NAME              | name of the database to use               | wdumper                      |
-| ZENODO_SANDBOX_TOKEN | API token for uploads to zenodo sandbox   |                              |
-| ZENODO_TOKEN         | API token for uploads to main zenodo      |                              |
-| DUMPS_PATH           | path where the generated dumps are stored | frontend/dumpfiles/generated |
-| PUBLIC_URL           | Public URL pointing to the web server     | http://localhost:5050/       |
+docker run -it --rm --name wdumper -v YOUR_DATA_PATH_HERE:/data -e DUMPS_PATH=/data  aammar/wdumper /data/wikidata_dump.json.gz /data/specs.json
