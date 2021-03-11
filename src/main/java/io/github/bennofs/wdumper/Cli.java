@@ -24,6 +24,9 @@ public class Cli implements Runnable {
     @CommandLine.Parameters(paramLabel = "SPEC", arity = "1", index = "1", description = "Path to the JSON spec for the dump")
     private Path specFilePath;
 
+    @CommandLine.Parameters(paramLabel = "ID", arity = "1", index = "2", description = "unique ID (integer) for the dump")
+    private int dumpId;
+	
     @Override
     public void run() {
         final DumpRunner.Config config = new DumpRunner.Config() {
@@ -38,13 +41,13 @@ public class Cli implements Runnable {
             }
         };
 
-        final DumpRunner runner = DumpRunner.create(1, config, new ZstdDumpFile(dumpFilePath.toString()));
+        final DumpRunner runner = DumpRunner.create(dumpId, config, new ZstdDumpFile(dumpFilePath.toString()));
 
         try {
             final ObjectMapper mapper = new ObjectMapper();
             final DumpSpec spec = mapper.readValue(this.specFilePath.toFile(), DumpSpec.class);
 
-            runner.addDumpTask(1, spec, (level, message) -> System.err.println("[" + level.toString() + "] " + message));
+            runner.addDumpTask(dumpId, spec, (level, message) -> System.err.println("[" + level.toString() + "] " + message));
         } catch(IOException e) {
             e.printStackTrace();
             System.exit(1);
